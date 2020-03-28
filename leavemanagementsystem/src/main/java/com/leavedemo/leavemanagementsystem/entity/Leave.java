@@ -14,8 +14,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "leave")
+@Getter
+@Setter
 public class Leave implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -33,37 +38,5 @@ public class Leave implements Serializable {
 
 	@JoinColumn(name = "user_id")
 	private Long userId;
-
-	public Long getLeaveId() {
-		return leaveId;
-	}
-
-	public void setLeaveId(Long leaveId) {
-		this.leaveId = leaveId;
-	}
-
-	public String getLeaveCategery() {
-		return leaveCategery;
-	}
-
-	public void setLeaveCategery(String leaveCategery) {
-		this.leaveCategery = leaveCategery;
-	}
-
-	public Integer getNoOfDays() {
-		return noOfDays;
-	}
-
-	public void setNoOfDays(Integer noOfDays) {
-		this.noOfDays = noOfDays;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
 
 }

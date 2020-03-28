@@ -14,8 +14,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "employee_leave")
+@Getter
+@Setter
+@Data
 public class EmployeeLeave implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -49,46 +56,6 @@ public class EmployeeLeave implements Serializable {
 		this.leaveToDate = leaveToDate;
 		this.noOfDays = noOfDays;
 		this.userId = userId;
-	}
-
-	public Long getEmployeeLeaveId() {
-		return employeeLeaveId;
-	}
-
-	public void setEmployeeLeaveId(Long employeeLeaveId) {
-		this.employeeLeaveId = employeeLeaveId;
-	}
-
-	public String getLeaveReason() {
-		return leaveReason;
-	}
-
-	public void setLeaveReason(String leaveReason) {
-		this.leaveReason = leaveReason;
-	}
-
-	public LocalDate getLeaveFfromDate() {
-		return leaveFfromDate;
-	}
-
-	public void setLeaveFfromDate(LocalDate leaveFfromDate) {
-		this.leaveFfromDate = leaveFfromDate;
-	}
-
-	public LocalDate getLeaveToDate() {
-		return leaveToDate;
-	}
-
-	public void setLeaveToDate(LocalDate leaveToDate) {
-		this.leaveToDate = leaveToDate;
-	}
-
-	public Long getNoOfDays() {
-		return noOfDays;
-	}
-
-	public void setNoOfDays(Long noOfDays) {
-		this.noOfDays = noOfDays;
 	}
 
 	public EmployeeLeave() {

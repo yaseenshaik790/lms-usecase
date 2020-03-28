@@ -58,7 +58,7 @@ public class UserController {
 	 * @throws InvalidToDateException       when client enters invalid To date
 	 * @throws InvalidFromDateException     when client enters invalid To date
 	 */
-	@PostMapping("/{userId}")
+	@PostMapping("/{userId}/leave")
 	public ResponseEntity<LeaveResponse> applyLeave(@PathVariable Long userId,
 			@Valid @RequestBody LeaveRequest leaveRequest) {
 

@@ -1,12 +1,12 @@
 package com.leavedemo.leavemanagementsystem;
 
 /**
- * creating static dtat for testing
+ * creating static data for testing
  * @author ShaikYaseen
  */
 import java.time.LocalDate;
 
-public class TestData {
+public interface TestData {
 	public static final Long userId = 10l;
 	public static final String userName = "Yaseen Shaik";
 	public static final String password = "123";
@@ -26,7 +26,7 @@ public class TestData {
 	public static final Integer noOfDays2 = 6;
 	public static final Long employeeLeaveId = 10l;
 	public static final String leaveReason = "My Leave";
-	public static final LocalDate leavefromDate = LocalDate.of(2020, 03, 29);
+	public static final LocalDate leavefromDate = LocalDate.of(2020, 03, 30);
 	public static final LocalDate leaveToDate = LocalDate.of(2020, 04, 04);
 	public static final Long noOfDay = 3l;
 

@@ -1,5 +1,12 @@
 package com.leavedemo.leavemanagementsystem.dto;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Data
 public class LeaveDTO {
 
 	private Long leaveId;
@@ -9,37 +16,5 @@ public class LeaveDTO {
 	private Integer noOfDays;
 
 	private Long userId;
-
-	public Long getLeaveId() {
-		return leaveId;
-	}
-
-	public void setLeaveId(Long leaveId) {
-		this.leaveId = leaveId;
-	}
-
-	public String getLeaveCategery() {
-		return leaveCategery;
-	}
-
-	public void setLeaveCategery(String leaveCategery) {
-		this.leaveCategery = leaveCategery;
-	}
-
-	public Integer getNoOfDays() {
-		return noOfDays;
-	}
-
-	public void setNoOfDays(Integer noOfDays) {
-		this.noOfDays = noOfDays;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
 
 }

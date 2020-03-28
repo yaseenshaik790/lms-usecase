@@ -14,8 +14,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Table(name = "user")
+@Getter
+@Setter
+@Data
 public class User implements Serializable {
 
 	private static final long serialVersionUID = 1L;

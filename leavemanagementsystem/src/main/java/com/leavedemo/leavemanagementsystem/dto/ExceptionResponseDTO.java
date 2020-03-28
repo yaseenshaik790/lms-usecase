@@ -6,6 +6,10 @@ package com.leavedemo.leavemanagementsystem.dto;
  */
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Getter;
+import lombok.Setter;
+@Getter
+@Setter
 public class ExceptionResponseDTO {
 	@JsonProperty("message")
 	private String message;
@@ -18,19 +22,5 @@ public class ExceptionResponseDTO {
 		this.errorCode = errorCode;
 	}
 
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-
-	public Integer getErrorCode() {
-		return errorCode;
-	}
-
-	public void setErrorCode(Integer errorCode) {
-		this.errorCode = errorCode;
-	}
+	
 }

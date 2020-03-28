@@ -1,5 +1,6 @@
 package com.leavedemo.leavemanagementsystem.service;
 
+import java.time.DayOfWeek;
 /**
  * UserServiceImpl is used to write business logic
  * @author YaseenShaik
@@ -27,6 +28,7 @@ import com.leavedemo.leavemanagementsystem.exception.InvalidToDateException;
 import com.leavedemo.leavemanagementsystem.exception.LeaveIdNotAvailableException;
 import com.leavedemo.leavemanagementsystem.exception.LeavesNotAvailableException;
 import com.leavedemo.leavemanagementsystem.exception.UserNotFoundException;
+import com.leavedemo.leavemanagementsystem.exception.WeekendDateException;
 import com.leavedemo.leavemanagementsystem.repository.EmployeeLeaveRepository;
 import com.leavedemo.leavemanagementsystem.repository.LeaveRepository;
 import com.leavedemo.leavemanagementsystem.repository.UserRepository;
@@ -128,16 +130,20 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * Method is used to apply one day leave
 	 * 
-	 * @throws UserNotFoundException
-	 * @throws LeavesNotAvailableException
-	 * @throws LeaveIdNotAvailableException
-	 * @throws LeavesNotAvailableException
-	 * @throws InvalidFromDateException
-	 * @throws InvalidFromDateException
+	 * @throws UserNotFoundException        when user not exist
+	 * @throws LeavesNotAvailableException  when leaves not available
+	 * @throws LeaveIdNotAvailableException when leave id doesn't exist
+	 * @throws LeavesNotAvailableException  when leaves not available
+	 * @throws InvalidToDateException       when client enters invalid To date
+	 * @throws InvalidFromDateException     when client enters invalid To date
 	 */
 	@Transactional
 	public LeaveResponse applyOneDayLeave(Long userId, LeaveRequest leaveRequest) {
 
+		DayOfWeek dayOfWeek = leaveRequest.getFromDate().getDayOfWeek();
+		if (dayOfWeek == DayOfWeek.SUNDAY || dayOfWeek == DayOfWeek.SATURDAY) {
+			throw new WeekendDateException(leaveRequest.getFromDate());
+		}
 		if (LocalDate.now().isAfter(leaveRequest.getFromDate())) {
 			throw new InvalidFromDateException(leaveRequest.getFromDate());
 		}

@@ -58,6 +58,16 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 	}
 
+	@ExceptionHandler(WeekendDateException.class)
+	public ResponseEntity<Object> weekendDateException(WeekendDateException weekendDateException) {
+
+		ExceptionResponseDTO exceptionResponseDTO = new ExceptionResponseDTO(weekendDateException.getMessage(),
+				weekendDateException.getErrorCode());
+
+		return new ResponseEntity<>(exceptionResponseDTO, HttpStatus.NOT_FOUND);
+
+	}
+
 	@ExceptionHandler(InvalidFromDateException.class)
 	public ResponseEntity<Object> invalidFromDateException(InvalidFromDateException invalidFromDateException) {
 

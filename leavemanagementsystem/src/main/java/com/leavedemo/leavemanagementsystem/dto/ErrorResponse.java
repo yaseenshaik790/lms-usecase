@@ -1,4 +1,5 @@
 package com.leavedemo.leavemanagementsystem.dto;
+
 /**
  * ErrorResponse class is used to send method level constraint validation message to the user
  * @author YaseenShaik
@@ -7,6 +8,11 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Setter
+@Getter
 public class ErrorResponse {
 
 	@JsonProperty("errorMessage")
@@ -29,23 +35,4 @@ public class ErrorResponse {
 		this.statusCode = statusCode;
 	}
 
-	@JsonProperty("errorMessage")
-	public String getErrorMessage() {
-		return errorMessage;
-	}
-
-	@JsonProperty("errorMessage")
-	public void setErrorMessage(String errorMessage) {
-		this.errorMessage = errorMessage;
-	}
-
-	@JsonProperty("statusCode")
-	public Integer getStatusCode() {
-		return statusCode;
-	}
-
-	@JsonProperty("statusCode")
-	public void setStatusCode(Integer statusCode) {
-		this.statusCode = statusCode;
-	}
 }

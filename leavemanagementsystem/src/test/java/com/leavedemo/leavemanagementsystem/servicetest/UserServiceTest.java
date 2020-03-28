@@ -37,6 +37,7 @@ import com.leavedemo.leavemanagementsystem.exception.InvalidToDateException;
 import com.leavedemo.leavemanagementsystem.exception.LeaveIdNotAvailableException;
 import com.leavedemo.leavemanagementsystem.exception.LeavesNotAvailableException;
 import com.leavedemo.leavemanagementsystem.exception.UserNotFoundException;
+import com.leavedemo.leavemanagementsystem.exception.WeekendDateException;
 import com.leavedemo.leavemanagementsystem.repository.EmployeeLeaveRepository;
 import com.leavedemo.leavemanagementsystem.repository.LeaveRepository;
 import com.leavedemo.leavemanagementsystem.repository.UserRepository;
@@ -108,7 +109,7 @@ public class UserServiceTest {
 	 * testing apply for an leave
 	 */
 	@Test
-	public void testApplyLeave() {
+	public void testApplyLeavePositive() {
 		when(userRepository.findById(TestData.userId)).thenReturn(Optional.of(user));
 		when(leaveRepository.save(leave)).thenReturn(leave);
 		when(employeeLeaveRepository.save(employeeLeave)).thenReturn(employeeLeave);
@@ -154,7 +155,7 @@ public class UserServiceTest {
 	 * testing to apply leave for more than one day
 	 */
 	@Test
-	public void testApplyOneDayLeave() {
+	public void testApplyOneDayLeavePositive() {
 		leaveRequest1 = new LeaveRequest();
 		leaveRequest1.setFromDate(TestData.leavefromDate);
 		leaveRequest1.setLeaveId(TestData.leaveId);
@@ -179,7 +180,7 @@ public class UserServiceTest {
 	 * test getLeaves ByUserId when user doesn't exist
 	 */
 	@Test
-	public void testgetLeavesByUserIdInUserNotFoundException() {
+	public void testgetLeavesByUserIdThrowsUserNotFoundException() {
 
 		when(userRepository.findById(TestData.userId)).thenReturn(Optional.empty());
 
@@ -193,7 +194,7 @@ public class UserServiceTest {
 	 * test leaves are not available exception
 	 */
 	@Test
-	public void testgetLeavesByUserIdLeavesNotAvailableException() {
+	public void testgetLeavesByUserIdThrowsLeavesNotAvailableException() {
 
 		when(userRepository.findById(TestData.userId)).thenReturn(Optional.of(user));
 		List<Leave> leaves = new ArrayList<>();
@@ -211,7 +212,7 @@ public class UserServiceTest {
 	 * test when user is doesn't exist to apply leave
 	 */
 	@Test
-	public void testapplyLeaveMethodUserNotFoundException() {
+	public void testapplyLeaveThrowsUserNotFoundException() {
 
 		when(userRepository.findById(TestData.userId)).thenReturn(Optional.empty());
 
@@ -224,7 +225,7 @@ public class UserServiceTest {
 	 * test from date is valid or not
 	 */
 	@Test
-	public void testapplyLeaveMethodInvalidFromDateException() {
+	public void testapplyLeaveThrowsInvalidFromDateException() {
 
 		when(userRepository.findById(TestData.userId)).thenReturn(Optional.of(user));
 		LeaveRequest leavetest = new LeaveRequest();
@@ -241,7 +242,7 @@ public class UserServiceTest {
 	 * test from date is valid or not to apply leave
 	 */
 	@Test
-	public void testapplyOneDayLeaveMethodInvalidFromDateException() {
+	public void testapplyOneDayLeavethrowsInvalidFromDateException() {
 
 		when(userRepository.findById(TestData.userId)).thenReturn(Optional.of(user));
 		LeaveRequest leavetest = new LeaveRequest();
@@ -252,12 +253,29 @@ public class UserServiceTest {
 		});
 
 	}
+	
+	/**
+	 * test from date is valid or not to apply leave
+	 */
+	@Test
+	public void testapplyOneDayLeavethrowsWeekendDateException() {
+
+		when(userRepository.findById(TestData.userId)).thenReturn(Optional.of(user));
+		LeaveRequest leavetest = new LeaveRequest();
+		leavetest.setFromDate(LocalDate.of(2020, 03, 29));
+
+		assertThrows(WeekendDateException.class, () -> {
+			userService.applyLeave(TestData.userId, leavetest);
+		});
+
+	}
+
 
 	/**
 	 * test user entered data is valid or not
 	 */
 	@Test
-	public void testapplyLeaveMethodInvalidToDateException() {
+	public void testapplyLeaveThrowsInvalidToDateException() {
 
 		when(userRepository.findById(TestData.userId)).thenReturn(Optional.of(user));
 		LeaveRequest leavetest = new LeaveRequest();
@@ -274,7 +292,7 @@ public class UserServiceTest {
 	 * test leaves are available or not to the user
 	 */
 	@Test
-	public void testapplyLeaveMethodLeavesNotAvailableException() {
+	public void testapplyLeavethrowsLeavesNotAvailableException() {
 
 		when(userRepository.findById(TestData.userId)).thenReturn(Optional.of(user));
 		LeaveRequest leavetest = new LeaveRequest();
@@ -292,11 +310,11 @@ public class UserServiceTest {
 	 * test leaves are not available when client gives request
 	 */
 	@Test
-	public void testapplyOneDayLeaveMethodLeavesNotAvailableException() {
+	public void testapplyOneDayLeaveThrowsLeavesNotAvailableException() {
 
 		when(userRepository.findById(TestData.userId)).thenReturn(Optional.of(user));
 		LeaveRequest leavetest = new LeaveRequest();
-		leavetest.setFromDate(LocalDate.of(2020, 03, 28));
+		leavetest.setFromDate(LocalDate.of(2020, 03, 30));
 		when(leaveRepository.findByLeaveIdAndUserId(1l, TestData.userId)).thenReturn(Optional.of(leave));
 
 		assertThrows(LeavesNotAvailableException.class, () -> {
@@ -309,7 +327,7 @@ public class UserServiceTest {
 	 * test leaves available or not of perticular user
 	 */
 	@Test
-	public void testapplyLeaveMethodLeaveIdNotAvailableException() {
+	public void testapplyLeaveThrowsLeaveIdNotAvailableException() {
 
 		when(userRepository.findById(TestData.userId)).thenReturn(Optional.of(user));
 		LeaveRequest leavetest = new LeaveRequest();
@@ -329,7 +347,7 @@ public class UserServiceTest {
 	 * available exception in apply leave
 	 */
 	@Test
-	public void getLeavsByUserIdExceptionNegative() {
+	public void getLeavsByUserIdThrowsExceptionNegative() {
 
 		when(userRepository.findById(200l)).thenReturn(Optional.of(user));
 		when(userRepository.findById(200l)).thenReturn(Optional.empty());
